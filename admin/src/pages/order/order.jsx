@@ -21,7 +21,8 @@ export default function Order() {
   const handleClick = async (e) => {
     e.preventDefault();
     axios.put(
-      "http://localhost:5000/api/orders/" + orderId,
+      "http://a070e3166c7174c39b04aab6c1466a76-1087190230.us-west-2.elb.amazonaws.com:5000/api/orders/" +
+        orderId,
       {
         status: status,
       },

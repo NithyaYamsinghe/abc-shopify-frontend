@@ -36,20 +36,33 @@ const Cart = () => {
 
   const handleCartDelete = async () => {
     dispatch(setInitial());
-    const res = await publicRequest.get("/carts/find/" + currentUser._id, {
-      headers: headers,
-    });
-    await axios.delete("http://localhost:5000/api/carts/" + res.data._id, {});
+    const res = await axios.get(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/find/" +
+        currentUser._id,
+      {
+        headers: headers,
+      }
+    );
+    await axios.delete(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
+        res.data._id,
+      {}
+    );
   };
 
   const handleDelete = async (index) => {
     console.log(index);
     dispatch(deleteProduct({ index }));
-    const res = await publicRequest.get("/carts/find/" + currentUser._id, {
-      headers: headers,
-    });
+    const res = await axios.get(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/find/" +
+        currentUser._id,
+      {
+        headers: headers,
+      }
+    );
     await axios.put(
-      "http://localhost:5000/api/carts/" + res.data._id,
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
+        res.data._id,
       {
         userId: currentUser._id,
         products: cart.products.map((item) => ({
@@ -64,10 +77,14 @@ const Cart = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post("/checkout/payment", {
-          tokenId: stripeToken.id,
-          amount: 500,
-        });
+        const res = await axios.post(
+          "http://ae907ab84c890486eb78e7c4f2ee2a68-623489253.us-west-2.elb.amazonaws.com:5000/api/checkout/payment",
+          {
+            tokenId: stripeToken.id,
+            amount: 500,
+          },
+          { headers: headers }
+        );
         history.push("/success", {
           stripeData: res.data,
           products: cart,
@@ -147,7 +164,7 @@ const Cart = () => {
             </SummaryItem>
             <StripeCheckout
               name="ABC Shopify"
-              image={logo}
+              image="https://avatars.githubusercontent.com/u/1486366?v=4"
               billingAddress
               shippingAddress
               description={`Your total is $${cart.total}`}

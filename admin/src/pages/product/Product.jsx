@@ -56,7 +56,11 @@ export default function Product() {
   useEffect(() => {
     const getStats = async () => {
       try {
-        const res = await userRequest.get("orders/income?pid=" + productId);
+        const res = await axios.get(
+          "http://a070e3166c7174c39b04aab6c1466a76-1087190230.us-west-2.elb.amazonaws.com:5000/api/orders/income?pid=" +
+            productId,
+          { headers: headers }
+        );
         const list = res.data.sort((a, b) => {
           return a._id - b._id;
         });
@@ -102,7 +106,8 @@ export default function Product() {
       async () => {
         await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           axios.put(
-            "http://localhost:5000/api/products/" + productId,
+            "http://a6a4e9e6b445641958090689d07dfd75-993476866.us-west-2.elb.amazonaws.com:5000/api/products/" +
+              productId,
             {
               ...inputs,
               img: downloadURL,

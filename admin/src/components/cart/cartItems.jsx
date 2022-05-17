@@ -16,9 +16,12 @@ export default function CartItems() {
   const headers = { token: `Bearer ${TOKEN}` };
 
   useEffect(async () => {
-    const response = await axios.get("http://localhost:5000/api/carts", {
-      headers: headers,
-    });
+    const response = await axios.get(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts",
+      {
+        headers: headers,
+      }
+    );
     const value = response.data.find((element) => {
       return element._id === cartId;
     });

@@ -25,12 +25,20 @@ const Success = () => {
 
   const completeOrder = async () => {
     dispatch(setInitial());
-    const res = await publicRequest.get("/carts/find/" + currentUser._id, {
-      headers: headers,
-    });
-    await axios.delete("http://localhost:5000/api/carts/" + res.data._id, {
-      headers: headers,
-    });
+    const res = await axios.get(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/find/" +
+        currentUser._id,
+      {
+        headers: headers,
+      }
+    );
+    await axios.delete(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
+        res.data._id,
+      {
+        headers: headers,
+      }
+    );
     window.location = "/cart";
   };
 
@@ -38,7 +46,7 @@ const Success = () => {
     const createOrder = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/orders",
+          "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/orders",
           {
             userId: currentUser._id,
             products: cart.products.map((item) => ({

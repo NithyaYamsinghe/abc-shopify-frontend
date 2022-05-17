@@ -38,7 +38,8 @@ export default function User() {
 
   useEffect(async () => {
     const response = await axios.get(
-      "http://localhost:5000/api/users/find/" + userId,
+      "http://a954c3a1117354aa1af418a15820f675-1076326496.us-west-2.elb.amazonaws.com:5000/api/users/find/" +
+        userId,
       {
         headers: headers,
       }
@@ -76,7 +77,8 @@ export default function User() {
       async () => {
         await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           axios.put(
-            "http://localhost:5000/api/users/" + userId,
+            "http://a954c3a1117354aa1af418a15820f675-1076326496.us-west-2.elb.amazonaws.com:5000/api/users/" +
+              userId,
             {
               username,
               email,

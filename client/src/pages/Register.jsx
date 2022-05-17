@@ -11,11 +11,14 @@ const Register = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const res = await axios.post("http://localhost:5000/api/auth/register", {
-      username,
-      email,
-      password,
-    });
+    const res = await axios.post(
+      "http://a749384d347a840de8a1f30b4afcd786-1852372676.us-west-2.elb.amazonaws.com:5000/api/auth/register",
+      {
+        username,
+        email,
+        password,
+      }
+    );
 
     window.location = "./login";
   };

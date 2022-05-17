@@ -33,7 +33,10 @@ const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await publicRequest.get("/products/find/" + id);
+        const res = await axios.get(
+          "http://a6a4e9e6b445641958090689d07dfd75-993476866.us-west-2.elb.amazonaws.com:5000/api/products/find/" +
+            id
+        );
         setProduct(res.data);
       } catch {}
     };
@@ -52,7 +55,7 @@ const Product = () => {
     dispatch(addProduct({ ...product, quantity, color, size }));
     if (cart.products.length == 1) {
       await axios.post(
-        "http://localhost:5000/api/carts",
+        "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts",
         {
           userId: currentUser._id,
           products: cart.products.map((item) => ({
@@ -63,12 +66,17 @@ const Product = () => {
         { headers: headers }
       );
     } else if (cart.products.length > 1) {
-      const res = await publicRequest.get("/carts/find/" + currentUser._id, {
-        headers: headers,
-      });
+      const res = await axios.get(
+        "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/find/" +
+          currentUser._id,
+        {
+          headers: headers,
+        }
+      );
       console.log(res);
       await axios.put(
-        "http://localhost:5000/api/carts/" + res.data._id,
+        "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
+          res.data._id,
         {
           userId: currentUser._id,
           products: cart.products.map((item) => ({

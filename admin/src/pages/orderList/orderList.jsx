@@ -14,16 +14,23 @@ export default function OrderList() {
   const headers = { token: `Bearer ${TOKEN}` };
 
   useEffect(async () => {
-    const response = await axios.get("http://localhost:5000/api/orders", {
-      headers: headers,
-    });
+    const response = await axios.get(
+      "http://a070e3166c7174c39b04aab6c1466a76-1087190230.us-west-2.elb.amazonaws.com:5000/api/orders",
+      {
+        headers: headers,
+      }
+    );
     setOrders(response.data);
   }, [orders]);
 
   const handleDelete = async (id) => {
-    await axios.delete("http://localhost:5000/api/orders/" + id, {
-      headers: headers,
-    });
+    await axios.delete(
+      "http://a070e3166c7174c39b04aab6c1466a76-1087190230.us-west-2.elb.amazonaws.com:5000/api/orders/" +
+        id,
+      {
+        headers: headers,
+      }
+    );
   };
 
   const columns = [

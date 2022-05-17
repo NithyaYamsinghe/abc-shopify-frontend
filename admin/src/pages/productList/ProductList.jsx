@@ -22,9 +22,13 @@ export default function ProductList() {
 
   const handleDelete = async (id) => {
     console.log(id);
-    await axios.delete("http://localhost:5000/api/products/" + id, {
-      headers: headers,
-    });
+    await axios.delete(
+      "http://a6a4e9e6b445641958090689d07dfd75-993476866.us-west-2.elb.amazonaws.com:5000/api/products/" +
+        id,
+      {
+        headers: headers,
+      }
+    );
   };
 
   const columns = [

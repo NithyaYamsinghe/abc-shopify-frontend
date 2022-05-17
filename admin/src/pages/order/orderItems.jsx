@@ -16,9 +16,12 @@ export default function OrderItems() {
   const headers = { token: `Bearer ${TOKEN}` };
 
   useEffect(async () => {
-    const response = await axios.get("http://localhost:5000/api/orders", {
-      headers: headers,
-    });
+    const response = await axios.get(
+      "http://a070e3166c7174c39b04aab6c1466a76-1087190230.us-west-2.elb.amazonaws.com:5000/api/orders",
+      {
+        headers: headers,
+      }
+    );
     const value = response.data.find((element) => {
       return element._id === orderId;
     });

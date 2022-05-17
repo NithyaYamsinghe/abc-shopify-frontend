@@ -16,17 +16,24 @@ export default function UserList() {
   const headers = { token: `Bearer ${TOKEN}` };
 
   useEffect(async () => {
-    const response = await axios.get("http://localhost:5000/api/users", {
-      headers: headers,
-    });
+    const response = await axios.get(
+      "http://a954c3a1117354aa1af418a15820f675-1076326496.us-west-2.elb.amazonaws.com:5000/api/users",
+      {
+        headers: headers,
+      }
+    );
     setUsers(response.data);
     console.log(users);
   }, [users]);
 
   const handleDelete = async (id) => {
-    await axios.delete("http://localhost:5000/api/users/" + id, {
-      headers: headers,
-    });
+    await axios.delete(
+      "http://a954c3a1117354aa1af418a15820f675-1076326496.us-west-2.elb.amazonaws.com:5000/api/users/" +
+        id,
+      {
+        headers: headers,
+      }
+    );
   };
 
   const columns = [

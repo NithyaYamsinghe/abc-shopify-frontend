@@ -32,12 +32,16 @@ export default function NewUser() {
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    const res = await axios.post("http://localhost:5000/api/auth/register", {
-      username,
-      email,
-      password,
-      isAdmin,
-    });
+    const res = await axios.post(
+      "http://a749384d347a840de8a1f30b4afcd786-1852372676.us-west-2.elb.amazonaws.com:5000/api/auth/register",
+      {
+        username,
+        email,
+        password,
+        isAdmin,
+      },
+      { headers: headers }
+    );
 
     uploadTask.on(
       "state_changed",
@@ -61,7 +65,8 @@ export default function NewUser() {
       async () => {
         await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           axios.put(
-            "http://localhost:5000/api/users/" + res.data._id,
+            "http://a954c3a1117354aa1af418a15820f675-1076326496.us-west-2.elb.amazonaws.com:5000/api/users/" +
+              res.data._id,
             {
               username,
               email,

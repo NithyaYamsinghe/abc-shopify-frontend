@@ -19,8 +19,8 @@ const Products = ({ cat, filters, sort }) => {
       try {
         const res = await axios.get(
           cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : "http://localhost:5000/api/products",
+            ? `http://a6a4e9e6b445641958090689d07dfd75-993476866.us-west-2.elb.amazonaws.com:5000/api/products?category=${cat}`
+            : "http://a6a4e9e6b445641958090689d07dfd75-993476866.us-west-2.elb.amazonaws.com:5000/api/products",
           {
             headers: headers,
           }

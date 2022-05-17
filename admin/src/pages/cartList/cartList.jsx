@@ -14,16 +14,23 @@ export default function CartList() {
   const headers = { token: `Bearer ${TOKEN}` };
 
   useEffect(async () => {
-    const response = await axios.get("http://localhost:5000/api/carts", {
-      headers: headers,
-    });
+    const response = await axios.get(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts",
+      {
+        headers: headers,
+      }
+    );
     setCarts(response.data);
   }, [carts]);
 
   const handleDelete = async (id) => {
-    await axios.delete("http://localhost:5000/api/carts/" + id, {
-      headers: headers,
-    });
+    await axios.delete(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
+        id,
+      {
+        headers: headers,
+      }
+    );
   };
 
   const columns = [
