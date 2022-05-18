@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -14,7 +13,6 @@ const Login = () => {
   const handleClick = (e) => {
     e.preventDefault();
     login(dispatch, { username, password });
-    Swal.fire("Success!", "Signed In successfully", "success");
     window.location = "/";
   };
   return (

@@ -7,14 +7,10 @@ import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
-import { userRequest } from "../requestMethods";
 import { useHistory } from "react-router-dom";
-import logo from "./../images/logo.jpg";
 import { deleteProduct, setInitial } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
-import { publicRequest } from "../requestMethods";
 import axios from "axios";
-import Swal from "sweetalert2";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -36,82 +32,42 @@ const Cart = () => {
   };
 
   const handleCartDelete = async () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      cancelButtonColor: "#3CB371",
-      confirmButtonColor: "#FF0000",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        dispatch(setInitial());
-        const res = await axios.get(
-          "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/find/" +
-            currentUser._id,
-          {
-            headers: headers,
-          }
-        );
-        await axios.delete(
-          "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
-            res.data._id,
-          {}
-        );
-        Swal.fire("Deleted!", "Cart deleted successfully", "success");
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        Swal.fire("Cancelled");
+    dispatch(setInitial());
+    const res = await axios.get(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/find/" +
+        currentUser._id,
+      {
+        headers: headers,
       }
-    });
+    );
+    await axios.delete(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
+        res.data._id,
+      {}
+    );
   };
 
   const handleDelete = async (index) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      cancelButtonColor: "#3CB371",
-      confirmButtonColor: "#FF0000",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteProduct({ index }));
-        const res = await axios.get(
-          "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/find/" +
-            currentUser._id,
-          {
-            headers: headers,
-          }
-        );
-        await axios.put(
-          "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
-            res.data._id,
-          {
-            userId: currentUser._id,
-            products: cart.products.map((item) => ({
-              productId: item._id,
-              quantity: item._quantity,
-            })),
-          },
-          { headers: headers }
-        );
-        Swal.fire("Deleted!", "Cart Item deleted successfully", "success");
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        Swal.fire("Cancelled");
+    dispatch(deleteProduct({ index }));
+    const res = await axios.get(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/find/" +
+        currentUser._id,
+      {
+        headers: headers,
       }
-    });
+    );
+    await axios.put(
+      "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/carts/" +
+        res.data._id,
+      {
+        userId: currentUser._id,
+        products: cart.products.map((item) => ({
+          productId: item._id,
+          quantity: item._quantity,
+        })),
+      },
+      { headers: headers }
+    );
   };
 
   useEffect(() => {

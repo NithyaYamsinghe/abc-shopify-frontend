@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { mobile } from "../responsive";
 import { setInitial } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
-import Swal from "sweetalert2";
 
 const Success = () => {
   const location = useLocation();
@@ -63,7 +62,6 @@ const Success = () => {
           { headers: headers }
         );
         setOrderId(res.data._id);
-        Swal.fire("Success!", "Order created successfully", "success");
       } catch {}
     };
 

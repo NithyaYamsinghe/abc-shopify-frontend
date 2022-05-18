@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import { mobile } from "../responsive";
 import axios from "axios";
-import Swal from "sweetalert2";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -20,7 +19,6 @@ const Register = () => {
         password,
       }
     );
-    Swal.fire("Success!", "Signed Up successfully", "success");
     window.location = "./login";
   };
 
