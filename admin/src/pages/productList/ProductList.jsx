@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/apiCalls";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -21,14 +22,33 @@ export default function ProductList() {
   }, [dispatch]);
 
   const handleDelete = async (id) => {
-    console.log(id);
-    await axios.delete(
-      "http://a6a4e9e6b445641958090689d07dfd75-993476866.us-west-2.elb.amazonaws.com:5000/api/products/" +
-        id,
-      {
-        headers: headers,
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      cancelButtonColor: "#3CB371",
+      confirmButtonColor: "#FF0000",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios.delete(
+          "http://a6a4e9e6b445641958090689d07dfd75-993476866.us-west-2.elb.amazonaws.com:5000/api/products/" +
+            id,
+          {
+            headers: headers,
+          }
+        );
+        Swal.fire("Deleted!", "Product deleted successfully", "success");
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire("Cancelled");
       }
-    );
+    });
   };
 
   const columns = [

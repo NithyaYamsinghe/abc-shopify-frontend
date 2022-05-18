@@ -20,6 +20,7 @@
     "recharts": "^2.0.9",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.5",
+    "sweetalert2": "^11.4.14",
     "timeago.js": "^4.0.2",
     "web-vitals": "^1.0.1"
   },

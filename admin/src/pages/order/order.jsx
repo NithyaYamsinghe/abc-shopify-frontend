@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import "./order.css";
 import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Order() {
   const location = useLocation();
@@ -28,6 +29,7 @@ export default function Order() {
       },
       { headers: headers }
     );
+    Swal.fire("Success!", "Order updated successfully", "success");
   };
 
   return (

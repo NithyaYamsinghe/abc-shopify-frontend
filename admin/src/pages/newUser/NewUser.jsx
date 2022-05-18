@@ -8,6 +8,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
+import Swal from "sweetalert2";
 
 export default function NewUser() {
   const [username, setUsername] = useState("");
@@ -71,12 +72,12 @@ export default function NewUser() {
               username,
               email,
               password,
-              isAdmin,
+              isAdmin: true,
               img: downloadURL,
             },
             { headers: headers }
           );
-          // window.location = "./users";
+          Swal.fire("Success!", "New users added successfully", "success");
         });
       }
     );

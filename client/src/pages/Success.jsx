@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { mobile } from "../responsive";
 import { setInitial } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
-import { publicRequest } from "../requestMethods";
+import Swal from "sweetalert2";
 
 const Success = () => {
   const location = useLocation();
@@ -20,6 +20,10 @@ const Success = () => {
   const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
   const currentUsers = user && JSON.parse(user).currentUser;
   const TOKEN = currentUsers?.accessToken;
+
+  console.log(data);
+  console.log(cart);
+  console.log(currentUser);
 
   const headers = { token: `Bearer ${TOKEN}` };
 
@@ -46,7 +50,7 @@ const Success = () => {
     const createOrder = async () => {
       try {
         const res = await axios.post(
-          "http://a21f6cee680614373bf75e2759b51e67-1616939274.us-west-2.elb.amazonaws.com:5000/api/orders",
+          "http://a070e3166c7174c39b04aab6c1466a76-1087190230.us-west-2.elb.amazonaws.com:5000/api/orders",
           {
             userId: currentUser._id,
             products: cart.products.map((item) => ({
@@ -59,6 +63,7 @@ const Success = () => {
           { headers: headers }
         );
         setOrderId(res.data._id);
+        Swal.fire("Success!", "Order created successfully", "success");
       } catch {}
     };
 

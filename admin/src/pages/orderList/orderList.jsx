@@ -4,6 +4,8 @@ import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { green, red } from "@material-ui/core/colors";
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -24,13 +26,33 @@ export default function OrderList() {
   }, [orders]);
 
   const handleDelete = async (id) => {
-    await axios.delete(
-      "http://a070e3166c7174c39b04aab6c1466a76-1087190230.us-west-2.elb.amazonaws.com:5000/api/orders/" +
-        id,
-      {
-        headers: headers,
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      cancelButtonColor: "#3CB371",
+      confirmButtonColor: "#FF0000",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios.delete(
+          "http://a070e3166c7174c39b04aab6c1466a76-1087190230.us-west-2.elb.amazonaws.com:5000/api/orders/" +
+            id,
+          {
+            headers: headers,
+          }
+        );
+        Swal.fire("Deleted!", "Order deleted successfully", "success");
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire("Cancelled");
       }
-    );
+    });
   };
 
   const columns = [

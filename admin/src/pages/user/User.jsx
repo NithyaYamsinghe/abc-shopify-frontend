@@ -17,6 +17,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
+import Swal from "sweetalert2";
 
 export default function User() {
   const location = useLocation();
@@ -88,7 +89,7 @@ export default function User() {
             },
             { headers: headers }
           );
-          // window.location = "./users";
+          Swal.fire("Success!", "User updated successfully", "success");
         });
       }
     );

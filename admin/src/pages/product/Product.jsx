@@ -4,7 +4,6 @@ import Chart from "../../components/chart/Chart";
 import { Publish } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
-import { userRequest } from "../../requestMethods";
 import {
   getStorage,
   ref,
@@ -13,17 +12,17 @@ import {
 } from "firebase/storage";
 import app from "../../firebase";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Product() {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
   const [pStats, setPStats] = useState([]);
   const [file, setFile] = useState(null);
-  const [inputs, setInputs] = useState({});
   const [cat, setCat] = useState([]);
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
-  const [url, setUrl] = useState("");
+  const [inputs, setInputs] = useState({});
 
   const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
   const currentUsers = user && JSON.parse(user).currentUser;
@@ -118,6 +117,7 @@ export default function Product() {
             { headers: headers }
           );
         });
+        Swal.fire("Success!", "Product updated successfully", "success");
       }
     );
   };

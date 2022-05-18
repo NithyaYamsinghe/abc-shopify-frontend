@@ -5,6 +5,7 @@ import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function UserList() {
   const [data, setData] = useState(userRows);
@@ -27,13 +28,33 @@ export default function UserList() {
   }, [users]);
 
   const handleDelete = async (id) => {
-    await axios.delete(
-      "http://a954c3a1117354aa1af418a15820f675-1076326496.us-west-2.elb.amazonaws.com:5000/api/users/" +
-        id,
-      {
-        headers: headers,
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      cancelButtonColor: "#3CB371",
+      confirmButtonColor: "#FF0000",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios.delete(
+          "http://a954c3a1117354aa1af418a15820f675-1076326496.us-west-2.elb.amazonaws.com:5000/api/users/" +
+            id,
+          {
+            headers: headers,
+          }
+        );
+        Swal.fire("Deleted!", "User deleted successfully", "success");
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire("Cancelled");
       }
-    );
+    });
   };
 
   const columns = [

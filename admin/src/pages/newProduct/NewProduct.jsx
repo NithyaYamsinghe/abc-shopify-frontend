@@ -9,6 +9,7 @@ import {
 import app from "../../firebase";
 import { addProduct } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 export default function NewProduct() {
   const [inputs, setInputs] = useState({});
@@ -77,9 +78,11 @@ export default function NewProduct() {
             categories: cat,
             size: size,
             color: color,
+            inStock: true,
           };
           addProduct(product, dispatch);
         });
+        Swal.fire("Success!", "New product added successfully", "success");
       }
     );
   };
